@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="mcp-http-client.png" alt="MCP HTTP Client Logo" width="200"/>
+</p>
+
 # MCP HTTP Client Server
 
 A Model Context Protocol (MCP) server for making HTTP requests, GraphQL queries, and raw TCP/Telnet connections from AI assistants.
