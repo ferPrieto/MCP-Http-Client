@@ -69,6 +69,13 @@ tasks.build {
     dependsOn(tasks.shadowJar)
 }
 
+tasks.register<JavaExec>("runBenchmark") {
+    group = "verification"
+    description = "Run cache performance benchmark"
+    classpath = sourceSets["test"].runtimeClasspath
+    mainClass.set("io.mcp.httpclient.benchmark.RunBenchmarkKt")
+}
+
 
 
 

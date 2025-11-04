@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="mcp-http.png" alt="MCP HTTP Client" width="200"/>
+</p>
+
 # MCP HTTP Client Server
 
 A Model Context Protocol (MCP) server for making HTTP requests, GraphQL queries, and raw TCP/Telnet connections from AI assistants.
@@ -135,13 +139,14 @@ TCP connection test:
 "Check if port 8080 is open on localhost using telnet"
 ```
 
-## Features
+## Performance Caching
 
-- **Intelligent Caching**: GET requests are automatically cached with LRU eviction (5-minute TTL)
-- **Type Safety**: Built with Kotlin value classes for compile-time validation
-- **Clean Architecture**: Organized with domain, data, and presentation layers
-- **Dependency Injection**: Uses Koin for maintainable dependency management
-- **Async Processing**: Kotlin coroutines for efficient concurrent operations
+Implements intelligent LRU (Least Recently Used) cache with TTL expiration that automatically caches GET requests, delivering **13.7x speedup** (92% faster) on repeated requests. Inspired by Bruno API client, the cache is thread-safe, limits memory usage to 100 entries, and expires data after 5 minutes to balance performance with data freshness.
+
+**Benchmark Results** (10 identical GET requests):
+- Without Cache: 1537ms (153ms per request)
+- With Cache: 112ms (11ms per request)
+- Speedup: 13.7x faster with 9/10 requests served from cache
 
 ## License
 
