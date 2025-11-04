@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "http-client": {
+      "command": "java",
+      "args": [
+        "-jar",
+        "/Users/fprieto/PersonalProjects/MCP-Http-Client/build/libs/mcp-http-client-all.jar"
+      ]
+    }
+  }
+}
+
+
+
+
+
+
+

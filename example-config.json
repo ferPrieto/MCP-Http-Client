@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "http-client": {
+      "command": "java",
+      "args": [
+        "-jar",
+        "/absolute/path/to/MCP-Http-Client/build/libs/mcp-http-client-all.jar"
+      ]
+    }
+  }
+}
+
+
+
+
+
+
+
+
