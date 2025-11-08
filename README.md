@@ -6,44 +6,80 @@
 
 A Model Context Protocol (MCP) server for making HTTP requests, GraphQL queries, and raw TCP/Telnet connections from AI assistants.
 
-## Quick Start
+## Installation
 
-### Prerequisites
+Choose your preferred installation method:
 
-- Java 11 or higher
-- Gradle 7.0 or higher
-
-### Build
+### Option 1: npm (Recommended for easy setup)
 
 ```bash
+npm install -g @mcp/http-client
+```
+
+### Option 2: Homebrew (macOS/Linux)
+
+```bash
+brew tap yourusername/mcp-http-client
+brew install mcp-http-client
+```
+
+### Option 3: Maven Central (for Kotlin/JVM projects)
+
+```kotlin
+dependencies {
+    implementation("io.mcp:httpclient:1.0.0")
+}
+```
+
+### Option 4: Build from Source
+
+```bash
+git clone https://github.com/yourusername/MCP-Http-Client.git
+cd MCP-Http-Client
 ./gradlew clean build
 ```
 
 This generates `build/libs/mcp-http-client-all.jar`.
 
-### Configuration
+## Configuration
 
-Add to your MCP client configuration:
+Add to your MCP client configuration file:
+- **Cursor**: `~/.cursor/mcp.json`
+- **Claude Desktop**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 
-**Cursor** (`~/.cursor/mcp.json`):
+### If installed via npm:
+
 ```json
 {
   "mcpServers": {
     "http-client": {
-      "command": "java",
-      "args": ["-jar", "/absolute/path/to/mcp-http-client-all.jar"]
+      "command": "npx",
+      "args": ["@mcp/http-client"]
     }
   }
 }
 ```
 
-**Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+### If installed via Homebrew:
+
+```json
+{
+  "mcpServers": {
+    "http-client": {
+      "command": "mcp-http-client"
+    }
+  }
+}
+```
+
+### If using JAR directly:
+
 ```json
 {
   "mcpServers": {
     "http-client": {
       "command": "java",
-      "args": ["-jar", "/absolute/path/to/mcp-http-client-all.jar"]
+      "args": ["-jar", "/path/to/mcp-http-client-all.jar"]
     }
   }
 }
