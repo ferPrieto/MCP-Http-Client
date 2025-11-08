@@ -3,6 +3,8 @@ plugins {
     kotlin("plugin.serialization") version "1.9.22"
     application
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    `maven-publish`
+    signing
 }
 
 group = "io.mcp"
@@ -74,6 +76,63 @@ tasks.register<JavaExec>("runBenchmark") {
     description = "Run cache performance benchmark"
     classpath = sourceSets["test"].runtimeClasspath
     mainClass.set("io.mcp.httpclient.benchmark.RunBenchmarkKt")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "io.mcp"
+            artifactId = "httpclient"
+            version = "1.0.0"
+            
+            from(components["java"])
+            
+            artifact(tasks["shadowJar"])
+            
+            pom {
+                name.set("MCP HTTP Client Server")
+                description.set("Model Context Protocol server for HTTP/HTTPS, GraphQL, and TCP/Telnet connections")
+                url.set("https://github.com/yourusername/MCP-Http-Client")
+                
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+                
+                developers {
+                    developer {
+                        id.set("ferPrieto")
+                        name.set("Fernando Prieto")
+                        email.set("f.prieto.moyano@gmail.com")
+                    }
+                }
+                
+                scm {
+                    connection.set("scm:git:git://github.com/ferPrieto/MCP-Http-Client.git")
+                    developerConnection.set("scm:git:ssh://github.com/ferPrieto/MCP-Http-Client.git")
+                    url.set("https://github.com/ferPrieto/MCP-Http-Client")
+                }
+            }
+        }
+    }
+    
+    repositories {
+        maven {
+            name = "OSSRH"
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = System.getenv("OSSRH_USERNAME") ?: project.findProperty("ossrhUsername") as String?
+                password = System.getenv("OSSRH_PASSWORD") ?: project.findProperty("ossrhPassword") as String?
+            }
+        }
+    }
+}
+
+// Signing for Maven Central
+signing {
+    sign(publishing.publications["maven"])
 }
 
 
