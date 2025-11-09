@@ -1,10 +1,10 @@
-package io.mcp.httpclient.domain.usecase
+package ferprieto.mcp.httpclient.domain.usecase
 
-import io.mcp.httpclient.di.testModules
-import io.mcp.httpclient.domain.model.*
-import io.mcp.httpclient.domain.repository.CacheRepository
-import io.mcp.httpclient.domain.repository.HttpRepository
-import io.mcp.httpclient.domain.repository.TcpRepository
+import ferprieto.mcp.httpclient.di.testModules
+import ferprieto.mcp.httpclient.domain.model.*
+import ferprieto.mcp.httpclient.domain.repository.CacheRepository
+import ferprieto.mcp.httpclient.domain.repository.HttpRepository
+import ferprieto.mcp.httpclient.domain.repository.TcpRepository
 import io.mockk.*
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.AfterEach
@@ -54,7 +54,7 @@ class MakeHttpRequestUseCaseTest : KoinTest {
         
         // Then
         assertTrue(result is RequestResult.Success)
-        assertEquals("cached", (result as RequestResult.Success).data.body)
+        assertEquals("cached", result.data.body)
         coVerify { cacheRepository.get(request.cacheKey) }
         coVerify(exactly = 0) { httpRepository.makeRequest(any()) }
     }
@@ -81,7 +81,7 @@ class MakeHttpRequestUseCaseTest : KoinTest {
         
         // Then
         assertTrue(result is RequestResult.Success)
-        assertEquals("fresh", (result as RequestResult.Success).data.body)
+        assertEquals("fresh", result.data.body)
         coVerify { cacheRepository.put(request.cacheKey, response) }
     }
     
@@ -147,7 +147,7 @@ class MakeGraphQLRequestUseCaseTest : KoinTest {
         
         // Then
         assertTrue(result is RequestResult.Success)
-        assertEquals(200, (result as RequestResult.Success).data.status.value)
+        assertEquals(200, result.data.status.value)
     }
 }
 
@@ -183,7 +183,7 @@ class MakeTcpConnectionUseCaseTest : KoinTest {
         
         // Then
         assertTrue(result is RequestResult.Success)
-        assertTrue((result as RequestResult.Success).data is TcpResponseDomain.Success)
+        assertTrue(result.data is TcpResponseDomain.Success)
     }
 }
 

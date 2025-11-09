@@ -1,8 +1,8 @@
-package io.mcp.httpclient.data.mapper
+package ferprieto.mcp.httpclient.data.mapper
 
-import io.mcp.httpclient.domain.model.*
-import io.mcp.httpclient.models.HttpRequest
-import io.mcp.httpclient.models.HttpResponse
+import ferprieto.mcp.httpclient.domain.model.*
+import ferprieto.mcp.httpclient.models.HttpRequest
+import ferprieto.mcp.httpclient.models.HttpResponse
 
 /**
  * Mappers for converting between data and domain models

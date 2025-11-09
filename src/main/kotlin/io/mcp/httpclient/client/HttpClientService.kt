@@ -1,8 +1,8 @@
-package io.mcp.httpclient.client
+package ferprieto.mcp.httpclient.client
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.mcp.httpclient.models.HttpRequest
-import io.mcp.httpclient.models.HttpResponse
+import ferprieto.mcp.httpclient.models.HttpRequest
+import ferprieto.mcp.httpclient.models.HttpResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType

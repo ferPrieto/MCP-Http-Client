@@ -1,12 +1,12 @@
-package io.mcp.httpclient.data.repository
+package ferprieto.mcp.httpclient.data.repository
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.mcp.httpclient.client.HttpClientService
-import io.mcp.httpclient.client.TcpClientService
-import io.mcp.httpclient.data.mapper.*
-import io.mcp.httpclient.domain.model.*
-import io.mcp.httpclient.domain.repository.HttpRepository
-import io.mcp.httpclient.domain.repository.TcpRepository
+import ferprieto.mcp.httpclient.client.HttpClientService
+import ferprieto.mcp.httpclient.client.TcpClientService
+import ferprieto.mcp.httpclient.data.mapper.*
+import ferprieto.mcp.httpclient.domain.model.*
+import ferprieto.mcp.httpclient.domain.repository.HttpRepository
+import ferprieto.mcp.httpclient.domain.repository.TcpRepository
 
 private val logger = KotlinLogging.logger {}
 

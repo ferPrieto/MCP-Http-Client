@@ -1,8 +1,8 @@
-package io.mcp.httpclient.server
+package ferprieto.mcp.httpclient.server
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.mcp.httpclient.client.HttpClientService
-import io.mcp.httpclient.models.*
+import ferprieto.mcp.httpclient.client.HttpClientService
+import ferprieto.mcp.httpclient.models.*
 import kotlinx.coroutines.*
 import kotlinx.serialization.json.*
 import java.io.BufferedReader

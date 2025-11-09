@@ -1,4 +1,4 @@
-package io.mcp.httpclient.domain.model
+package ferprieto.mcp.httpclient.domain.model
 
 /**
  * Value classes for type-safe domain modeling

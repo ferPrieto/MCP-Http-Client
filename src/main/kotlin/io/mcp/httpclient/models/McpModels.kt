@@ -1,4 +1,4 @@
-package io.mcp.httpclient.models
+package ferprieto.mcp.httpclient.models
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement

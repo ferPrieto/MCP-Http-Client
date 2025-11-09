@@ -1,14 +1,14 @@
-package io.mcp.httpclient.benchmark
+package ferprieto.mcp.httpclient.benchmark
 
-import io.mcp.httpclient.client.HttpClientService
-import io.mcp.httpclient.data.cache.InMemoryCache
-import io.mcp.httpclient.data.repository.HttpRepositoryImpl
-import io.mcp.httpclient.domain.model.HttpMethod
-import io.mcp.httpclient.domain.model.HttpRequestDomain
-import io.mcp.httpclient.domain.model.RequestResult
-import io.mcp.httpclient.domain.model.Url
-import io.mcp.httpclient.domain.repository.CacheRepository
-import io.mcp.httpclient.domain.usecase.MakeHttpRequestUseCase
+import ferprieto.mcp.httpclient.client.HttpClientService
+import ferprieto.mcp.httpclient.data.cache.InMemoryCache
+import ferprieto.mcp.httpclient.data.repository.HttpRepositoryImpl
+import ferprieto.mcp.httpclient.domain.model.HttpMethod
+import ferprieto.mcp.httpclient.domain.model.HttpRequestDomain
+import ferprieto.mcp.httpclient.domain.model.RequestResult
+import ferprieto.mcp.httpclient.domain.model.Url
+import ferprieto.mcp.httpclient.domain.repository.CacheRepository
+import ferprieto.mcp.httpclient.domain.usecase.MakeHttpRequestUseCase
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import kotlin.system.measureTimeMillis

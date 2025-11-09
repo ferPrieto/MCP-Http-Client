@@ -1,4 +1,4 @@
-package io.mcp.httpclient.domain.model
+package ferprieto.mcp.httpclient.domain.model
 
 /**
  * Domain models representing the core business entities

@@ -1,12 +1,12 @@
-package io.mcp.httpclient.di
+package ferprieto.mcp.httpclient.di
 
-import io.mcp.httpclient.domain.repository.CacheRepository
-import io.mcp.httpclient.domain.repository.HttpRepository
-import io.mcp.httpclient.domain.repository.TcpRepository
-import io.mcp.httpclient.domain.usecase.InvalidateCacheUseCase
-import io.mcp.httpclient.domain.usecase.MakeGraphQLRequestUseCase
-import io.mcp.httpclient.domain.usecase.MakeHttpRequestUseCase
-import io.mcp.httpclient.domain.usecase.MakeTcpConnectionUseCase
+import ferprieto.mcp.httpclient.domain.repository.CacheRepository
+import ferprieto.mcp.httpclient.domain.repository.HttpRepository
+import ferprieto.mcp.httpclient.domain.repository.TcpRepository
+import ferprieto.mcp.httpclient.domain.usecase.InvalidateCacheUseCase
+import ferprieto.mcp.httpclient.domain.usecase.MakeGraphQLRequestUseCase
+import ferprieto.mcp.httpclient.domain.usecase.MakeHttpRequestUseCase
+import ferprieto.mcp.httpclient.domain.usecase.MakeTcpConnectionUseCase
 import io.mockk.mockk
 import org.koin.dsl.module
 

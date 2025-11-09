@@ -14,7 +14,7 @@
     </root>
     
     <!-- Application logger with TRACE level for detailed logging -->
-    <logger name="io.mcp.httpclient" level="TRACE" />
+    <logger name="ferprieto.mcp.httpclient" level="TRACE" />
 </configuration>
 
 

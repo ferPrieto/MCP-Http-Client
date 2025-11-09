@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.mcp:httpclient:1.0.0")
+    implementation("ferprieto.mcp:httpclient:1.0.0")
 }
 ```
 

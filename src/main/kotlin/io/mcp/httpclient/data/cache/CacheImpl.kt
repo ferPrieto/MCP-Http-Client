@@ -1,9 +1,9 @@
-package io.mcp.httpclient.data.cache
+package ferprieto.mcp.httpclient.data.cache
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.mcp.httpclient.domain.model.CacheKey
-import io.mcp.httpclient.domain.model.HttpResponseDomain
-import io.mcp.httpclient.domain.repository.CacheRepository
+import ferprieto.mcp.httpclient.domain.model.CacheKey
+import ferprieto.mcp.httpclient.domain.model.HttpResponseDomain
+import ferprieto.mcp.httpclient.domain.repository.CacheRepository
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes

@@ -1,8 +1,8 @@
-package io.mcp.httpclient
+package ferprieto.mcp.httpclient
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.mcp.httpclient.di.appModules
-import io.mcp.httpclient.server.McpServer
+import ferprieto.mcp.httpclient.di.appModules
+import ferprieto.mcp.httpclient.server.McpServer
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.java.KoinJavaComponent.inject

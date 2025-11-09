@@ -1,6 +1,6 @@
-package io.mcp.httpclient.domain.repository
+package ferprieto.mcp.httpclient.domain.repository
 
-import io.mcp.httpclient.domain.model.*
+import ferprieto.mcp.httpclient.domain.model.*
 
 /**
  * Repository interfaces defining data operations

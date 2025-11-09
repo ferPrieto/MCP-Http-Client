@@ -1,11 +1,11 @@
-package io.mcp.httpclient.presentation
+package ferprieto.mcp.httpclient.presentation
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.mcp.httpclient.domain.model.*
-import io.mcp.httpclient.domain.usecase.*
-import io.mcp.httpclient.models.McpRequest
-import io.mcp.httpclient.models.McpResponse
-import io.mcp.httpclient.models.McpError
+import ferprieto.mcp.httpclient.domain.model.*
+import ferprieto.mcp.httpclient.domain.usecase.*
+import ferprieto.mcp.httpclient.models.McpRequest
+import ferprieto.mcp.httpclient.models.McpResponse
+import ferprieto.mcp.httpclient.models.McpError
 import kotlinx.serialization.json.*
 
 private val logger = KotlinLogging.logger {}

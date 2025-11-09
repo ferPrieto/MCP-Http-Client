@@ -1,11 +1,11 @@
-package io.mcp.httpclient.benchmark
+package ferprieto.mcp.httpclient.benchmark
 
-import io.mcp.httpclient.client.HttpClientService
-import io.mcp.httpclient.data.cache.InMemoryCache
-import io.mcp.httpclient.data.repository.HttpRepositoryImpl
-import io.mcp.httpclient.domain.model.*
-import io.mcp.httpclient.domain.repository.CacheRepository
-import io.mcp.httpclient.domain.usecase.MakeHttpRequestUseCase
+import ferprieto.mcp.httpclient.client.HttpClientService
+import ferprieto.mcp.httpclient.data.cache.InMemoryCache
+import ferprieto.mcp.httpclient.data.repository.HttpRepositoryImpl
+import ferprieto.mcp.httpclient.domain.model.*
+import ferprieto.mcp.httpclient.domain.repository.CacheRepository
+import ferprieto.mcp.httpclient.domain.usecase.MakeHttpRequestUseCase
 import kotlinx.coroutines.runBlocking
 import kotlin.system.measureTimeMillis
 import kotlin.time.Duration.Companion.minutes

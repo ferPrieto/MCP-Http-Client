@@ -1,10 +1,10 @@
-package io.mcp.httpclient.domain.usecase
+package ferprieto.mcp.httpclient.domain.usecase
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.mcp.httpclient.domain.model.*
-import io.mcp.httpclient.domain.repository.CacheRepository
-import io.mcp.httpclient.domain.repository.HttpRepository
-import io.mcp.httpclient.domain.repository.TcpRepository
+import ferprieto.mcp.httpclient.domain.model.*
+import ferprieto.mcp.httpclient.domain.repository.CacheRepository
+import ferprieto.mcp.httpclient.domain.repository.HttpRepository
+import ferprieto.mcp.httpclient.domain.repository.TcpRepository
 
 private val logger = KotlinLogging.logger {}
 

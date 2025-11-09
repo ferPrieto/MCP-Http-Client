@@ -1,6 +1,6 @@
-package io.mcp.httpclient.data.dsl
+package ferprieto.mcp.httpclient.data.dsl
 
-import io.mcp.httpclient.domain.model.*
+import ferprieto.mcp.httpclient.domain.model.*
 
 /**
  * DSL for building HTTP requests in a fluent, type-safe manner

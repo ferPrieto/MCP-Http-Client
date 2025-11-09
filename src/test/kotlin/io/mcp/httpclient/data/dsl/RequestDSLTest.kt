@@ -1,6 +1,6 @@
-package io.mcp.httpclient.data.dsl
+package ferprieto.mcp.httpclient.data.dsl
 
-import io.mcp.httpclient.domain.model.HttpMethod
+import ferprieto.mcp.httpclient.domain.model.HttpMethod
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 

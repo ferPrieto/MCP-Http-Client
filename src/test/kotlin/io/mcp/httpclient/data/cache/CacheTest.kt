@@ -1,8 +1,8 @@
-package io.mcp.httpclient.data.cache
+package ferprieto.mcp.httpclient.data.cache
 
-import io.mcp.httpclient.domain.model.CacheKey
-import io.mcp.httpclient.domain.model.HttpResponseDomain
-import io.mcp.httpclient.domain.model.HttpStatusCode
+import ferprieto.mcp.httpclient.domain.model.CacheKey
+import ferprieto.mcp.httpclient.domain.model.HttpResponseDomain
+import ferprieto.mcp.httpclient.domain.model.HttpStatusCode
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
