@@ -4,7 +4,6 @@ plugins {
     application
     id("com.github.johnrengelman.shadow") version "8.1.1"
     `maven-publish`
-    signing
 }
 
 group = "io.mcp"
@@ -92,7 +91,7 @@ publishing {
             pom {
                 name.set("MCP HTTP Client Server")
                 description.set("Model Context Protocol server for HTTP/HTTPS, GraphQL, and TCP/Telnet connections")
-                url.set("https://github.com/yourusername/MCP-Http-Client")
+                url.set("https://github.com/ferPrieto/MCP-Http-Client")
                 
                 licenses {
                     license {
@@ -120,25 +119,14 @@ publishing {
     
     repositories {
         maven {
-            name = "OSSRH"
-            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/ferPrieto/MCP-Http-Client")
             credentials {
-                username = System.getenv("OSSRH_USERNAME") ?: project.findProperty("ossrhUsername") as String?
-                password = System.getenv("OSSRH_PASSWORD") ?: project.findProperty("ossrhPassword") as String?
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME") ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN") ?: System.getenv("GITHUB_TOKEN")
             }
         }
     }
-}
-
-// Signing for Maven Central
-signing {
-    val signingKey = System.getenv("SIGNING_KEY")
-    val signingPassword = System.getenv("SIGNING_PASSWORD")
-    
-    if (signingKey != null && signingPassword != null) {
-        useInMemoryPgpKeys(signingKey, signingPassword)
-    }
-    sign(publishing.publications["maven"])
 }
 
 

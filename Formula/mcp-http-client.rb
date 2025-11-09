@@ -1,7 +1,7 @@
 class McpHttpClient < Formula
   desc "MCP server for HTTP/HTTPS, GraphQL, and TCP/Telnet connections"
-  homepage "https://github.com/yourusername/MCP-Http-Client"
-  url "https://github.com/yourusername/MCP-Http-Client/releases/download/v1.0.0/mcp-http-client-1.0.0.tar.gz"
+  homepage "https://github.com/ferPrieto/MCP-Http-Client"
+  url "https://github.com/ferPrieto/MCP-Http-Client/releases/download/v1.0.0/mcp-http-client-1.0.0.tar.gz"
   sha256 "REPLACE_WITH_ACTUAL_SHA256"
   license "MIT"
 
