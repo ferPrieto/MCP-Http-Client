@@ -26,12 +26,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/MCP-Http-Client.git"
+    "url": "https://github.com/ferPrieto/MCP-Http-Client.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/MCP-Http-Client/issues"
+    "url": "https://github.com/ferPrieto/MCP-Http-Client/issues"
   },
-  "homepage": "https://github.com/yourusername/MCP-Http-Client#readme",
+  "homepage": "https://github.com/ferPrieto/MCP-Http-Client#readme",
   "engines": {
     "node": ">=14.0.0"
   },

@@ -19,22 +19,36 @@ npm install -g @mcp/http-client
 ### Option 2: Homebrew (macOS/Linux)
 
 ```bash
-brew tap yourusername/mcp-http-client
+brew tap ferPrieto/mcp-http-client
 brew install mcp-http-client
 ```
 
-### Option 3: Maven Central (for Kotlin/JVM projects)
+### Option 3: GitHub Packages (for Kotlin/JVM projects)
+
+Add the repository and dependency to your `build.gradle.kts`:
 
 ```kotlin
+repositories {
+    maven {
+        url = uri("https://maven.pkg.github.com/ferPrieto/MCP-Http-Client")
+        credentials {
+            username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+            password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+        }
+    }
+}
+
 dependencies {
     implementation("io.mcp:httpclient:1.0.0")
 }
 ```
 
+**Note:** GitHub Packages requires authentication. Generate a [Personal Access Token](https://github.com/settings/tokens) with `read:packages` scope.
+
 ### Option 4: Build from Source
 
 ```bash
-git clone https://github.com/yourusername/MCP-Http-Client.git
+git clone https://github.com/ferPrieto/MCP-Http-Client.git
 cd MCP-Http-Client
 ./gradlew clean build
 ```
