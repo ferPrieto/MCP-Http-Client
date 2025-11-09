@@ -6,7 +6,7 @@ plugins {
     `maven-publish`
 }
 
-group = "io.mcp"
+group = "ferprieto.mcp"
 version = "1.0.0"
 
 repositories {
@@ -46,7 +46,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("io.mcp.httpclient.MainKt")
+    mainClass.set("ferprieto.mcp.httpclient.MainKt")
 }
 
 tasks.test {
@@ -62,7 +62,7 @@ tasks.shadowJar {
     archiveClassifier.set("all")
     archiveVersion.set("")
     manifest {
-        attributes["Main-Class"] = "io.mcp.httpclient.MainKt"
+        attributes["Main-Class"] = "ferprieto.mcp.httpclient.MainKt"
     }
 }
 
@@ -74,13 +74,13 @@ tasks.register<JavaExec>("runBenchmark") {
     group = "verification"
     description = "Run cache performance benchmark"
     classpath = sourceSets["test"].runtimeClasspath
-    mainClass.set("io.mcp.httpclient.benchmark.RunBenchmarkKt")
+    mainClass.set("ferprieto.mcp.httpclient.benchmark.RunBenchmarkKt")
 }
 
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            groupId = "io.mcp"
+            groupId = "ferprieto.mcp"
             artifactId = "httpclient"
             version = "1.0.0"
             
