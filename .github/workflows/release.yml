@@ -33,14 +33,14 @@ jobs:
 
     - name: Create distribution archive
       run: |
-        VERSION=${GITHUB_REF#refs/tags/v}
+        VERSION=${GITHUB_REF_NAME#v}
         mkdir -p dist
         cp build/libs/mcp-http-client-all.jar dist/
         tar -czf mcp-http-client-${VERSION}.tar.gz -C dist .
         
     - name: Generate SHA256
       run: |
-        VERSION=${GITHUB_REF#refs/tags/v}
+        VERSION=${GITHUB_REF_NAME#v}
         shasum -a 256 mcp-http-client-${VERSION}.tar.gz > mcp-http-client-${VERSION}.tar.gz.sha256
     
     - name: Create GitHub Release
