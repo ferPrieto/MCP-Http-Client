@@ -84,9 +84,9 @@ publishing {
             artifactId = "httpclient"
             version = "1.0.0"
             
-            from(components["java"])
-            
-            artifact(tasks["shadowJar"])
+            artifact(tasks.shadowJar) {
+                classifier = ""
+            }
             
             pom {
                 name.set("MCP HTTP Client Server")
