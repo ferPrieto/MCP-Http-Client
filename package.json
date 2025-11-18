@@ -1,5 +1,5 @@
 {
-  "name": "@mcp/http-client",
+  "name": "mcp-http-client-server",
   "version": "1.0.0",
   "description": "Model Context Protocol server for HTTP/HTTPS, GraphQL, and TCP/Telnet connections",
   "main": "index.js",

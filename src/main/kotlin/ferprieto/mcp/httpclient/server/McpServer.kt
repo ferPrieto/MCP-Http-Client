@@ -1,14 +1,39 @@
 package ferprieto.mcp.httpclient.server
 
+import ferprieto.mcp.httpclient.models.Capabilities
+import ferprieto.mcp.httpclient.models.HttpRequest
+import ferprieto.mcp.httpclient.models.HttpResponse
+import ferprieto.mcp.httpclient.models.McpError
+import ferprieto.mcp.httpclient.models.McpInitializeResult
+import ferprieto.mcp.httpclient.models.McpListToolsResult
+import ferprieto.mcp.httpclient.models.McpRequest
+import ferprieto.mcp.httpclient.models.McpResponse
+import ferprieto.mcp.httpclient.models.McpToolDefinition
+import ferprieto.mcp.httpclient.models.ServerInfo
+import ferprieto.mcp.httpclient.models.ToolsCapability
 import io.github.oshai.kotlinlogging.KotlinLogging
-import ferprieto.mcp.httpclient.client.HttpClientService
-import ferprieto.mcp.httpclient.models.*
-import kotlinx.coroutines.*
-import kotlinx.serialization.json.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.io.PrintWriter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.encodeToJsonElement
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.put
+import kotlinx.serialization.json.putJsonObject
 
 private val logger = KotlinLogging.logger {}
 
@@ -16,6 +41,7 @@ private val logger = KotlinLogging.logger {}
  * MCP Server that handles JSON-RPC communication via stdio
  * Updated to use Clean Architecture with use cases
  */
+@OptIn(ExperimentalSerializationApi::class)
 class McpServer(
     private val makeHttpRequestUseCase: ferprieto.mcp.httpclient.domain.usecase.MakeHttpRequestUseCase,
     private val makeGraphQLRequestUseCase: ferprieto.mcp.httpclient.domain.usecase.MakeGraphQLRequestUseCase,
@@ -31,6 +57,7 @@ class McpServer(
     private val json = Json {
         ignoreUnknownKeys = true
         encodeDefaults = true
+        explicitNulls = false
         prettyPrint = false
     }
     
