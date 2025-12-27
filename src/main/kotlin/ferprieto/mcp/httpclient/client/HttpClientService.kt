@@ -1,6 +1,6 @@
 package ferprieto.mcp.httpclient.client
 
-import io.github.oshai.kotlinlogging.KotlinLogging
+import io.github.oshai.kotlinlogging.KLogger
 import ferprieto.mcp.httpclient.models.HttpRequest
 import ferprieto.mcp.httpclient.models.HttpResponse
 import kotlinx.coroutines.Dispatchers
@@ -12,12 +12,12 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-private val logger = KotlinLogging.logger {}
-
 /**
  * Service for executing HTTP requests using OkHttp
  */
-class HttpClientService {
+class HttpClientService(
+    private val logger: KLogger
+) {
     
     private val client = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)

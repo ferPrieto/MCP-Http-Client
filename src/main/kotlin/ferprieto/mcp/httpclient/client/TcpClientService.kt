@@ -1,6 +1,6 @@
 package ferprieto.mcp.httpclient.client
 
-import io.github.oshai.kotlinlogging.KotlinLogging
+import io.github.oshai.kotlinlogging.KLogger
 import ferprieto.mcp.httpclient.models.TcpRequest
 import ferprieto.mcp.httpclient.models.TcpResponse
 import kotlinx.coroutines.Dispatchers
@@ -11,12 +11,12 @@ import java.io.InputStreamReader
 import java.io.PrintWriter
 import java.net.Socket
 
-private val logger = KotlinLogging.logger {}
-
 /**
  * Service for making raw TCP/Telnet connections
  */
-class TcpClientService {
+class TcpClientService(
+    private val logger: KLogger
+) {
     
     /**
      * Makes a TCP connection to the specified host and port

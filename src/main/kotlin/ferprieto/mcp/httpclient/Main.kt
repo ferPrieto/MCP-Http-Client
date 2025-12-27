@@ -1,28 +1,30 @@
 package ferprieto.mcp.httpclient
 
-import io.github.oshai.kotlinlogging.KotlinLogging
+import io.github.oshai.kotlinlogging.KLogger
 import ferprieto.mcp.httpclient.di.appModules
 import ferprieto.mcp.httpclient.server.McpServer
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
+import org.koin.core.qualifier.named
 import org.koin.java.KoinJavaComponent.inject
-
-private val logger = KotlinLogging.logger {}
 
 /**
  * Main entry point for the MCP HTTP Client server
  * Uses Koin for dependency injection
  */
 fun main() {
+    // Initialize Koin first
+    startKoin {
+        modules(appModules)
+    }
+    
+    // Get logger after Koin is initialized
+    val logger: KLogger by inject(KLogger::class.java, named("Main"))
+    
     logger.info { "Starting MCP HTTP Client Server" }
     logger.trace { "Initializing Koin DI container" }
     
     try {
-        // Initialize Koin
-        startKoin {
-            modules(appModules)
-        }
-        
         logger.trace { "Koin initialization complete" }
         
         // Get MCP Server from Koin

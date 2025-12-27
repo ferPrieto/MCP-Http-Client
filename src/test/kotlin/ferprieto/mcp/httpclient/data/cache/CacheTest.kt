@@ -3,6 +3,7 @@ package ferprieto.mcp.httpclient.data.cache
 import ferprieto.mcp.httpclient.domain.model.CacheKey
 import ferprieto.mcp.httpclient.domain.model.HttpResponseDomain
 import ferprieto.mcp.httpclient.domain.model.HttpStatusCode
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -12,11 +13,12 @@ import kotlin.time.Duration.Companion.milliseconds
 
 class InMemoryCacheTest {
     
+    private val logger = KotlinLogging.logger {}
     private lateinit var cache: InMemoryCache
     
     @BeforeEach
     fun setup() {
-        cache = InMemoryCache(maxSize = 3, defaultTtl = 50.milliseconds)
+        cache = InMemoryCache(maxSize = 3, defaultTtl = 50.milliseconds, logger = logger)
     }
     
     @Test

@@ -1,25 +1,26 @@
 package ferprieto.mcp.httpclient.presentation
 
-import io.github.oshai.kotlinlogging.KotlinLogging
+import io.github.oshai.kotlinlogging.KLogger
 import ferprieto.mcp.httpclient.domain.model.*
 import ferprieto.mcp.httpclient.domain.usecase.*
-import ferprieto.mcp.httpclient.models.McpRequest
+import ferprieto.mcp.httpclient.data.formatter.ResponseFormatter
+import ferprieto.mcp.httpclient.data.contenttype.ContentTypeHandler
 import ferprieto.mcp.httpclient.models.McpResponse
 import ferprieto.mcp.httpclient.models.McpError
 import kotlinx.serialization.json.*
-
-private val logger = KotlinLogging.logger {}
 
 /**
  * Presentation layer logic for MCP Server
  * Handles parsing JSON-RPC requests and executing use cases
  */
-
 class McpServerPresentation(
     private val makeHttpRequestUseCase: MakeHttpRequestUseCase,
     private val makeGraphQLRequestUseCase: MakeGraphQLRequestUseCase,
     private val makeTcpConnectionUseCase: MakeTcpConnectionUseCase,
-    private val invalidateCacheUseCase: InvalidateCacheUseCase
+    private val invalidateCacheUseCase: InvalidateCacheUseCase,
+    private val responseFormatter: ResponseFormatter,
+    private val contentTypeHandler: ContentTypeHandler,
+    private val logger: KLogger
 ) {
     
     suspend fun handleMakeRequest(requestId: JsonElement, arguments: JsonObject?): McpResponse {
@@ -33,9 +34,17 @@ class McpServerPresentation(
             val request = parseHttpRequest(arguments)
             logger.trace { "Executing HTTP request use case" }
             
+            val startTime = System.currentTimeMillis()
             when (val result = makeHttpRequestUseCase(request)) {
                 is RequestResult.Success -> {
-                    createSuccessResponse(requestId, formatHttpResponse(result.data))
+                    val duration = System.currentTimeMillis() - startTime
+                    val formatted = responseFormatter.formatResponse(
+                        result.data.status.value,
+                        result.data.headers,
+                        result.data.body,
+                        duration
+                    )
+                    createSuccessResponse(requestId, formatted)
                 }
                 is RequestResult.Failure -> {
                     createErrorResponse(requestId, -32603, "Request failed: ${result.error.message}")
@@ -61,9 +70,17 @@ class McpServerPresentation(
             val request = parseGraphQLRequest(arguments)
             logger.trace { "Executing GraphQL request use case" }
             
+            val startTime = System.currentTimeMillis()
             when (val result = makeGraphQLRequestUseCase(request)) {
                 is RequestResult.Success -> {
-                    createSuccessResponse(requestId, formatHttpResponse(result.data))
+                    val duration = System.currentTimeMillis() - startTime
+                    val formatted = responseFormatter.formatResponse(
+                        result.data.status.value,
+                        result.data.headers,
+                        result.data.body,
+                        duration
+                    )
+                    createSuccessResponse(requestId, formatted)
                 }
                 is RequestResult.Failure -> {
                     createErrorResponse(requestId, -32603, "GraphQL query failed: ${result.error.message}")
@@ -110,6 +127,19 @@ class McpServerPresentation(
         }
     }
     
+    suspend fun handleClearCache(requestId: JsonElement): McpResponse {
+        logger.trace { "Handling clear_cache" }
+        
+        return try {
+            invalidateCacheUseCase.clear()
+            logger.info { "Cache cleared successfully" }
+            createSuccessResponse(requestId, "✅ Cache cleared successfully. All cached GET requests have been removed.")
+        } catch (e: Exception) {
+            logger.error(e) { "Error clearing cache" }
+            createErrorResponse(requestId, -32603, "Error clearing cache: ${e.message}")
+        }
+    }
+    
     private fun parseHttpRequest(arguments: JsonObject): HttpRequestDomain {
         val url = arguments["url"]?.jsonPrimitive?.content
             ?: throw IllegalArgumentException("Missing 'url' parameter")
@@ -119,20 +149,24 @@ class McpServerPresentation(
         
         val headers = arguments["headers"]?.jsonObject?.mapValues { 
             it.value.jsonPrimitive.content 
-        } ?: emptyMap()
+        }?.toMutableMap() ?: mutableMapOf()
         
         val params = arguments["params"]?.jsonObject?.mapValues { 
             it.value.jsonPrimitive.content 
         } ?: emptyMap()
         
-        val body = arguments["body"]?.jsonPrimitive?.content
+        val bodyType = arguments["bodyType"]?.jsonPrimitive?.content
+        val rawBody = arguments["body"]?.jsonPrimitive?.content
+        
+        // Process body based on content type
+        val processedBody = contentTypeHandler.processBody(rawBody, bodyType, headers)
         
         return HttpRequestDomain(
             url = Url(url),
             method = HttpMethod(method),
             headers = headers,
             params = params,
-            body = body
+            body = processedBody
         )
     }
     
@@ -180,21 +214,6 @@ class McpServerPresentation(
         )
     }
     
-    private fun formatHttpResponse(response: HttpResponseDomain): String = buildString {
-        appendLine("HTTP Response:")
-        appendLine("Status: ${response.status.value}")
-        appendLine()
-        appendLine("Headers:")
-        response.headers.forEach { (key, values) ->
-            values.forEach { value ->
-                appendLine("  $key: $value")
-            }
-        }
-        appendLine()
-        appendLine("Body:")
-        append(response.body)
-    }
-    
     private fun formatTcpSuccess(request: TcpRequestDomain, response: TcpResponseDomain.Success): String = buildString {
         appendLine("TCP Connection to ${request.host.value}:${request.port.value}")
         appendLine("Status: SUCCESS")
@@ -213,7 +232,7 @@ class McpServerPresentation(
     private fun createSuccessResponse(requestId: JsonElement, text: String): McpResponse {
         return McpResponse(
             id = requestId,
-            result = kotlinx.serialization.json.buildJsonObject {
+            result = buildJsonObject {
                 putJsonArray("content") {
                     addJsonObject {
                         put("type", "text")
@@ -231,4 +250,3 @@ class McpServerPresentation(
         )
     }
 }
-

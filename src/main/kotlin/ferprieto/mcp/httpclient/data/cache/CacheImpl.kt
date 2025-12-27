@@ -1,14 +1,12 @@
 package ferprieto.mcp.httpclient.data.cache
 
-import io.github.oshai.kotlinlogging.KotlinLogging
+import io.github.oshai.kotlinlogging.KLogger
 import ferprieto.mcp.httpclient.domain.model.CacheKey
 import ferprieto.mcp.httpclient.domain.model.HttpResponseDomain
 import ferprieto.mcp.httpclient.domain.repository.CacheRepository
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
-
-private val logger = KotlinLogging.logger {}
 
 /**
  * In-memory LRU cache implementation inspired by Bruno API client
@@ -28,7 +26,8 @@ data class CacheEntry(
 
 class InMemoryCache(
     private val maxSize: Int = 100,
-    private val defaultTtl: Duration = 5.minutes
+    private val defaultTtl: Duration = 5.minutes,
+    private val logger: KLogger
 ) : CacheRepository {
     
     private val cache = ConcurrentHashMap<String, CacheEntry>()

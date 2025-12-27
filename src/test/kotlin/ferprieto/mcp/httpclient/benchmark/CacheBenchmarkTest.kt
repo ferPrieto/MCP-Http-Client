@@ -9,6 +9,7 @@ import ferprieto.mcp.httpclient.domain.model.RequestResult
 import ferprieto.mcp.httpclient.domain.model.Url
 import ferprieto.mcp.httpclient.domain.repository.CacheRepository
 import ferprieto.mcp.httpclient.domain.usecase.MakeHttpRequestUseCase
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import kotlin.system.measureTimeMillis
@@ -22,18 +23,20 @@ import kotlin.time.Duration.Companion.minutes
  */
 class CacheBenchmarkTest {
     
+    private val logger = KotlinLogging.logger {}
+    
     @Test
     fun `benchmark cache performance with real HTTP calls`() = runBlocking {
         println("\n=== Cache Performance Benchmark ===\n")
         
         // Setup
-        val httpClientService = HttpClientService()
-        val httpRepository = HttpRepositoryImpl(httpClientService)
-        val realCache = InMemoryCache(maxSize = 100, defaultTtl = 5.minutes)
+        val httpClientService = HttpClientService(logger)
+        val httpRepository = HttpRepositoryImpl(httpClientService, logger)
+        val realCache = InMemoryCache(maxSize = 100, defaultTtl = 5.minutes, logger = logger)
         val noOpCache = NoOpCache() // Cache that does nothing
         
-        val useCaseWithCache = MakeHttpRequestUseCase(httpRepository, realCache)
-        val useCaseWithoutCache = MakeHttpRequestUseCase(httpRepository, noOpCache)
+        val useCaseWithCache = MakeHttpRequestUseCase(httpRepository, realCache, logger)
+        val useCaseWithoutCache = MakeHttpRequestUseCase(httpRepository, noOpCache, logger)
         
         // Test URL - JSONPlaceholder API
         val request = HttpRequestDomain(

@@ -1,10 +1,19 @@
 <p align="center">
-  <img src="mcp-http.png" alt="MCP HTTP Client" width="200"/>
+  <img src="mcp-http.png" alt="MCP HTTP Client" title="MCP-HTTP-CLIENT" align="right" width="64"/>
 </p>
 
 # MCP HTTP Client Server
 
-A Model Context Protocol (MCP) server for making HTTP requests, GraphQL queries, and raw TCP/Telnet connections from AI assistants.
+A powerful Model Context Protocol (MCP) server for making HTTP requests, GraphQL queries, and TCP/Telnet connections from AI assistants. Inspired by [Postman](https://www.postman.com) but designed for AI-native workflows with enhanced response formatting, intelligent caching, and multiple content type support.
+
+## Why Use This?
+
+- Seamlessly integrates with AI assistants like Claude
+- 13.7x faster with intelligent LRU caching
+- Auto-formatted JSON, status emojis, performance metrics
+- JSON, form-data, URL-encoded - all supported
+- very request shows response time
+- atural language commands, no complex setup
 
 ## Installation
 
@@ -99,105 +108,56 @@ Add to your MCP client configuration file:
 }
 ```
 
-## Available Functionalities
+## Comparison with Postman
 
-### 1. HTTP/HTTPS Requests
+| Feature | MCP HTTP Client | Postman |
+|---------|----------------|---------|
+| **Interface** | 🤖 Natural Language | 🖱️ GUI |
+| **Setup Time** | ⚡ 1 minute | ⏱️ 5+ minutes |
+| **HTTP Methods** | ✅ All | ✅ All |
+| **GraphQL** | ✅ Native | ✅ Yes |
+| **TCP/Telnet** | ✅ Yes | ❌ No |
+| **Content Types** | ✅ JSON, Form, URL-encoded | ✅ Many |
+| **Response Formatting** | ✅ Auto pretty-print | ✅ Yes |
+| **Performance Cache** | ✅ 13.7x faster | ❌ No |
+| **Response Time** | ✅ Auto-tracked | ✅ Yes |
+| **Cost** | 🆓 Free & Open Source | 💰 Free/Paid |
+| **AI Integration** | ✅ Native | ❌ Manual |
 
-Make HTTP requests with any method (GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS).
 
-**Examples:**
+## Advanced Features
 
-Simple GET request:
-```
-"Get data from https://api.example.com/posts/1"
-```
+### Content-Type Auto-Detection
 
-GET with query parameters:
-```
-"GET https://api.github.com/search/repositories with params q=kotlin and sort=stars"
-```
+The server automatically:
+- Detects JSON responses and pretty-prints them
+- Sets appropriate `Content-Type` headers based on `bodyType`
+- Handles form-data with proper multipart boundaries
+- URL-encodes form parameters automatically
 
-POST with JSON body:
-```
-"POST to https://api.example.com/users with body {name: 'John', email: 'john@example.com'}"
-```
+### Performance Metrics
 
-POST with headers and body:
-```
-"Send POST request to https://api.example.com/users with header Authorization: Bearer token123 and JSON body {name: 'Alice'}"
-```
+Every request automatically tracks:
+- Total request duration
+- Response size
+- Status codes
+- Timing information
 
-PUT request:
-```
-"Update user at https://api.example.com/users/42 with PUT method and body {status: 'active'}"
-```
 
-DELETE request:
-```
-"Delete resource at https://api.example.com/users/42 with Authorization header Bearer token123"
-```
+## 📝 Roadmap
 
-### 2. GraphQL Queries
+Future features planned for upcoming releases:
 
-Execute GraphQL queries with variables and custom headers.
+- **Collections**: Save and organize API requests (like Postman collections)
+- **Environments**: Manage variables across different environments (Dev, Staging, Production)
+- **Authentication Helpers**: Built-in support for Basic Auth, Bearer Token, API Key, OAuth2
+- **Request Chaining**: Use response values in subsequent requests with variable substitution
+- **Postman Import**: Import existing Postman collections for easy migration
 
-**Examples:**
-
-Simple GraphQL query:
-```
-"Query GraphQL at https://api.example.com/graphql: { user(id: 1) { name email } }"
-```
-
-GraphQL with variables:
-```
-"GraphQL query to https://api.example.com/graphql with query: { user(id: $userId) { name } } and variable userId=123"
-```
-
-GraphQL with operation name:
-```
-"Execute GraphQL query at https://api.example.com/graphql with query: { users { name } } and operationName=GetUsers"
-```
-
-GraphQL with authentication:
-```
-"Query GraphQL at https://api.example.com/graphql with header Authorization: Bearer token and query: { me { name email } }"
-```
-
-### 3. TCP/Telnet Connections
-
-Establish raw TCP socket connections for network testing.
-
-**Examples:**
-
-Basic TCP connection:
-```
-"Connect via telnet to 192.168.1.1 port 8080"
-```
-
-TCP with custom timeout:
-```
-"Test TCP connection to localhost:3000 with timeout 10 seconds"
-```
-
-TCP with message:
-```
-"Connect to example.com port 80 and send message: GET / HTTP/1.1"
-```
-
-TCP connection test:
-```
-"Check if port 8080 is open on localhost using telnet"
-```
-
-## Performance Caching
-
-Implements intelligent LRU (Least Recently Used) cache with TTL expiration that automatically caches GET requests, delivering **13.7x speedup** (92% faster) on repeated requests. Inspired by Bruno API client, the cache is thread-safe, limits memory usage to 100 entries, and expires data after 5 minutes to balance performance with data freshness.
-
-**Benchmark Results** (10 identical GET requests):
-- Without Cache: 1537ms (153ms per request)
-- With Cache: 112ms (11ms per request)
-- Speedup: 13.7x faster with 9/10 requests served from cache
-
-## License
+## 📄 License
 
 MIT License
+
+---
+
+Made with ❤️ for the AI-native development workflow. Simpler than [Postman](https://www.postman.com), faster than manual curl commands, perfect for AI assistants!
