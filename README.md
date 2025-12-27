@@ -144,7 +144,7 @@ Every request automatically tracks:
 - Timing information
 
 
-## 📝 Roadmap
+## Roadmap
 
 Future features planned for upcoming releases:
 
@@ -154,7 +154,7 @@ Future features planned for upcoming releases:
 - **Request Chaining**: Use response values in subsequent requests with variable substitution
 - **Postman Import**: Import existing Postman collections for easy migration
 
-## 📄 License
+## License
 
 MIT License
 
