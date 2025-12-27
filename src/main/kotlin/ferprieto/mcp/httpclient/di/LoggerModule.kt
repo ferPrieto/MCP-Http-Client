@@ -1,7 +1,6 @@
 package ferprieto.mcp.httpclient.di
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.github.oshai.kotlinlogging.KLogger
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
