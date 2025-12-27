@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="mcp-http.png" alt="MCP HTTP Client" title="MCP-HTTP-CLIENT" align="right" width="100"/>
+  <img src="mcp-http.png" alt="MCP HTTP Client" title="MCP-HTTP-CLIENT" align="right" width="64"/>
 </p>
 
 # MCP HTTP Client Server
