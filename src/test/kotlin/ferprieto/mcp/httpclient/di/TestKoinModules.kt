@@ -7,6 +7,7 @@ import ferprieto.mcp.httpclient.domain.usecase.InvalidateCacheUseCase
 import ferprieto.mcp.httpclient.domain.usecase.MakeGraphQLRequestUseCase
 import ferprieto.mcp.httpclient.domain.usecase.MakeHttpRequestUseCase
 import ferprieto.mcp.httpclient.domain.usecase.MakeTcpConnectionUseCase
+import io.github.oshai.kotlinlogging.KLogger
 import io.mockk.mockk
 import org.koin.dsl.module
 
@@ -18,28 +19,33 @@ val testRepositoryModule = module {
     single<HttpRepository> { mockk(relaxed = true) }
     single<TcpRepository> { mockk(relaxed = true) }
     single<CacheRepository> { mockk(relaxed = true) }
+    single<KLogger> { mockk(relaxed = true) }
 }
 
 val testUseCaseModule = module {
     single { 
         MakeHttpRequestUseCase(
             httpRepository = get(),
-            cacheRepository = get()
+            cacheRepository = get(),
+            logger = get()
         ) 
     }
     single { 
         MakeGraphQLRequestUseCase(
-            httpRepository = get()
+            httpRepository = get(),
+            logger = get()
         ) 
     }
     single { 
         MakeTcpConnectionUseCase(
-            tcpRepository = get()
+            tcpRepository = get(),
+            logger = get()
         ) 
     }
     single { 
         InvalidateCacheUseCase(
-            cacheRepository = get()
+            cacheRepository = get(),
+            logger = get()
         ) 
     }
 }

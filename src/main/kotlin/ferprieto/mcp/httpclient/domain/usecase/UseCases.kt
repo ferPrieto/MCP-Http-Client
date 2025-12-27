@@ -1,12 +1,10 @@
 package ferprieto.mcp.httpclient.domain.usecase
 
-import io.github.oshai.kotlinlogging.KotlinLogging
+import io.github.oshai.kotlinlogging.KLogger
 import ferprieto.mcp.httpclient.domain.model.*
 import ferprieto.mcp.httpclient.domain.repository.CacheRepository
 import ferprieto.mcp.httpclient.domain.repository.HttpRepository
 import ferprieto.mcp.httpclient.domain.repository.TcpRepository
-
-private val logger = KotlinLogging.logger {}
 
 /**
  * Use cases encapsulating business logic
@@ -15,7 +13,8 @@ private val logger = KotlinLogging.logger {}
 
 class MakeHttpRequestUseCase(
     private val httpRepository: HttpRepository,
-    private val cacheRepository: CacheRepository
+    private val cacheRepository: CacheRepository,
+    private val logger: KLogger
 ) {
     suspend operator fun invoke(request: HttpRequestDomain): RequestResult<HttpResponseDomain> {
         logger.trace { "Executing MakeHttpRequestUseCase for ${request.method.value} ${request.url.value}" }
@@ -44,7 +43,8 @@ class MakeHttpRequestUseCase(
 }
 
 class MakeGraphQLRequestUseCase(
-    private val httpRepository: HttpRepository
+    private val httpRepository: HttpRepository,
+    private val logger: KLogger
 ) {
     suspend operator fun invoke(request: GraphQLRequestDomain): RequestResult<HttpResponseDomain> {
         logger.trace { "Executing MakeGraphQLRequestUseCase for ${request.url.value}" }
@@ -53,7 +53,8 @@ class MakeGraphQLRequestUseCase(
 }
 
 class MakeTcpConnectionUseCase(
-    private val tcpRepository: TcpRepository
+    private val tcpRepository: TcpRepository,
+    private val logger: KLogger
 ) {
     suspend operator fun invoke(request: TcpRequestDomain): RequestResult<TcpResponseDomain> {
         logger.trace { "Executing MakeTcpConnectionUseCase for ${request.host.value}:${request.port.value}" }
@@ -62,7 +63,8 @@ class MakeTcpConnectionUseCase(
 }
 
 class InvalidateCacheUseCase(
-    private val cacheRepository: CacheRepository
+    private val cacheRepository: CacheRepository,
+    private val logger: KLogger
 ) {
     suspend operator fun invoke(key: CacheKey) {
         logger.trace { "Invalidating cache for key: ${key.value}" }

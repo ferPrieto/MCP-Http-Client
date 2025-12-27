@@ -11,7 +11,7 @@ import ferprieto.mcp.httpclient.models.McpResponse
 import ferprieto.mcp.httpclient.models.McpToolDefinition
 import ferprieto.mcp.httpclient.models.ServerInfo
 import ferprieto.mcp.httpclient.models.ToolsCapability
-import io.github.oshai.kotlinlogging.KotlinLogging
+import io.github.oshai.kotlinlogging.KLogger
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
@@ -35,25 +35,15 @@ import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
 import kotlinx.serialization.json.putJsonObject
 
-private val logger = KotlinLogging.logger {}
-
 /**
  * MCP Server that handles JSON-RPC communication via stdio
  * Updated to use Clean Architecture with use cases
  */
 @OptIn(ExperimentalSerializationApi::class)
 class McpServer(
-    private val makeHttpRequestUseCase: ferprieto.mcp.httpclient.domain.usecase.MakeHttpRequestUseCase,
-    private val makeGraphQLRequestUseCase: ferprieto.mcp.httpclient.domain.usecase.MakeGraphQLRequestUseCase,
-    private val makeTcpConnectionUseCase: ferprieto.mcp.httpclient.domain.usecase.MakeTcpConnectionUseCase,
-    private val invalidateCacheUseCase: ferprieto.mcp.httpclient.domain.usecase.InvalidateCacheUseCase
+    private val presentation: ferprieto.mcp.httpclient.presentation.McpServerPresentation,
+    private val logger: KLogger
 ) {
-    private val presentation = ferprieto.mcp.httpclient.presentation.McpServerPresentation(
-        makeHttpRequestUseCase = makeHttpRequestUseCase,
-        makeGraphQLRequestUseCase = makeGraphQLRequestUseCase,
-        makeTcpConnectionUseCase = makeTcpConnectionUseCase,
-        invalidateCacheUseCase = invalidateCacheUseCase
-    )
     private val json = Json {
         ignoreUnknownKeys = true
         encodeDefaults = true
@@ -220,6 +210,11 @@ class McpServer(
                             put("type", "string")
                             put("description", "Optional request body (usually JSON string for POST/PUT/PATCH requests)")
                         }
+                        putJsonObject("bodyType") {
+                            put("type", "string")
+                            put("description", "Body content type: RAW, JSON, FORM_DATA, X_WWW_FORM_URLENCODED (default: RAW)")
+                            put("enum", JsonArray(listOf("RAW", "JSON", "FORM_DATA", "X_WWW_FORM_URLENCODED").map { JsonPrimitive(it) }))
+                        }
                     }
                     put("required", JsonArray(listOf(JsonPrimitive("url"), JsonPrimitive("method"))))
                 }
@@ -289,6 +284,16 @@ class McpServer(
                     }
                     put("required", JsonArray(listOf(JsonPrimitive("host"), JsonPrimitive("port"))))
                 }
+            ),
+            McpToolDefinition(
+                name = "clear_cache",
+                description = "Clears the HTTP request cache. " +
+                        "The cache automatically stores GET requests for 5 minutes to improve performance (13.7x speedup). " +
+                        "Use this tool when you need fresh data or want to test without cached responses.",
+                inputSchema = buildJsonObject {
+                    put("type", "object")
+                    put("properties", JsonObject(emptyMap()))
+                }
             )
         )
         
@@ -321,6 +326,7 @@ class McpServer(
             "make_request" -> presentation.handleMakeRequest(request.id, arguments)
             "graphql_query" -> presentation.handleGraphQLQuery(request.id, arguments)
             "tcp_connect" -> presentation.handleTcpConnect(request.id, arguments)
+            "clear_cache" -> presentation.handleClearCache(request.id)
             else -> {
                 logger.warn { "Unknown tool requested: $toolName" }
                 McpResponse(

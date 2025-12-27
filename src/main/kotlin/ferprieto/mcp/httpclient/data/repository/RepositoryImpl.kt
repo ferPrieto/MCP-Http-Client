@@ -1,6 +1,6 @@
 package ferprieto.mcp.httpclient.data.repository
 
-import io.github.oshai.kotlinlogging.KotlinLogging
+import io.github.oshai.kotlinlogging.KLogger
 import ferprieto.mcp.httpclient.client.HttpClientService
 import ferprieto.mcp.httpclient.client.TcpClientService
 import ferprieto.mcp.httpclient.data.mapper.*
@@ -8,15 +8,14 @@ import ferprieto.mcp.httpclient.domain.model.*
 import ferprieto.mcp.httpclient.domain.repository.HttpRepository
 import ferprieto.mcp.httpclient.domain.repository.TcpRepository
 
-private val logger = KotlinLogging.logger {}
-
 /**
  * Repository implementations
  * Bridge between domain and data sources
  */
 
 class HttpRepositoryImpl(
-    private val httpClientService: HttpClientService
+    private val httpClientService: HttpClientService,
+    private val logger: KLogger
 ) : HttpRepository {
     
     override suspend fun makeRequest(request: HttpRequestDomain): RequestResult<HttpResponseDomain> {
@@ -55,7 +54,8 @@ class HttpRepositoryImpl(
 }
 
 class TcpRepositoryImpl(
-    private val tcpClientService: TcpClientService
+    private val tcpClientService: TcpClientService,
+    private val logger: KLogger
 ) : TcpRepository {
     
     override suspend fun connect(request: TcpRequestDomain): RequestResult<TcpResponseDomain> {

@@ -24,7 +24,7 @@ dependencies {
     // HTTP client
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     
-    // Logging
+    // Logging - kotlin-logging with Logback backend
     implementation("ch.qos.logback:logback-classic:1.4.14")
     implementation("io.github.oshai:kotlin-logging-jvm:5.1.0")
     
